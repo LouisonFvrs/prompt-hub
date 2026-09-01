@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, input } from '@angular/core'
 import { Card } from 'primeng/card'
 import { InputText } from 'primeng/inputtext'
 import { Textarea } from 'primeng/textarea'
@@ -23,6 +23,8 @@ export class PromptFormComponent {
   promptService = inject(PromptService)
   categoryService = inject(CategoryServiceService)
 
+  promptId = input<number>()
+
   categories = toSignal(this.categoryService.getCategories())
 
   form = new FormGroup({
@@ -31,11 +33,39 @@ export class PromptFormComponent {
     categoryId: new FormControl(-1, { validators:[Validators.required, Validators.min(0)], nonNullable: true }),
   })
 
+  constructor() {
+    effect(() => {
+      const promptId = this.promptId()
+      if(promptId) {
+        this.promptService.getPrompt(promptId).subscribe(prompt => {
+          this.form.patchValue({
+            title: prompt.title,
+            content: prompt.content,
+            categoryId: prompt.category.id
+          })
+        })
+      }
+    })
+  }
+
   submit() {
     this.form.markAsTouched()
     if(this.form.invalid) return
+
     const prompt = this.form.getRawValue()
-    this.promptService.createPrompt(prompt).subscribe()
+
+    if(this.promptId()) {
+      this.promptService.updatePrompt(this.promptId()!, prompt).subscribe()
+    } else {
+      this.promptService.createPrompt(prompt).subscribe()
+    }
     void this.router.navigate(['/'])
+  }
+
+  delete() {
+    if(this.promptId()) {
+      this.promptService.deletePrompt(this.promptId()!).subscribe()
+      void this.router.navigate(['/'])
+    }
   }
 }
