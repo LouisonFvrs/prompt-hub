@@ -5,5 +5,6 @@ import { PromptFormComponent } from './prompts/prompt-form/prompt-form.component
 export const routes: Routes = [
   { path: '', redirectTo: 'prompts', pathMatch: 'full' },
   {    path: 'prompts', component: PromptList  },
-  {    path: 'prompts/create', component: PromptFormComponent  }
+  {    path: 'prompts/create', component: PromptFormComponent  },
+  {    path: 'prompts/:promptId/edit', component: PromptFormComponent  }
 ]
