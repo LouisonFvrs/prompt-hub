@@ -13,6 +13,7 @@ import { definePreset } from '@primeuix/themes'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { authInterceptor } from './auth/auth-interceptor'
 import { AuthService } from './auth/auth-service'
+import { MessageService } from 'primeng/api'
 
 const promptPreset = definePreset(Aura, {
   semantic: {
@@ -46,5 +47,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    MessageService
   ],
 }

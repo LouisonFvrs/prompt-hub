@@ -10,6 +10,8 @@ import { Button } from 'primeng/button'
 import { PromptService } from '../prompt-service'
 import { Prompt } from '../prompt.model'
 import { Router, RouterLink } from '@angular/router'
+import { MessageService } from 'primeng/api'
+import { from } from 'rxjs'
 
 @Component({
   selector: 'app-prompt-form',
@@ -19,6 +21,7 @@ import { Router, RouterLink } from '@angular/router'
   styleUrl: './prompt-form.component.scss',
 })
 export class PromptFormComponent {
+  message = inject(MessageService)
   router = inject(Router)
   promptService = inject(PromptService)
   categoryService = inject(CategoryServiceService)
@@ -59,12 +62,18 @@ export class PromptFormComponent {
     } else {
       this.promptService.createPrompt(prompt).subscribe()
     }
+    this.message.add({ severity: 'success', summary: 'Success', detail: 'Prompt saved successfully' })
     void this.router.navigate(['/'])
   }
 
   delete() {
     if(this.promptId()) {
       this.promptService.deletePrompt(this.promptId()!).subscribe()
+      this.message.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Prompt deleted successfully',
+      })
       void this.router.navigate(['/'])
     }
   }
