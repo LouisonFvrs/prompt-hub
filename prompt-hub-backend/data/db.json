@@ -84,15 +84,6 @@
       "userId": 1,
       "score": 0,
       "createdAt": "2026-09-01T08:18:27.933Z"
-    },
-    {
-      "id": 8,
-      "title": "Mon prompt",
-      "content": "Fais mon un programme pour devenir riche",
-      "categoryId": 4,
-      "userId": 4,
-      "score": 0,
-      "createdAt": "2026-09-01T12:43:24.738Z"
     }
   ],
   "votes": [
