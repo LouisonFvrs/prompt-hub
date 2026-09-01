@@ -32,6 +32,11 @@
       "id": 1,
       "username": "Système",
       "passwordHash": "$2b$10$placeholder.no.login.system.user.xYz123456789"
+    },
+    {
+      "id": 4,
+      "username": "Louison",
+      "passwordHash": "$2b$10$ILma0o6rKrU7SNMjg.Nk0.f/eu7sFBLVuhcFwsfytoYtpERhV0EFi"
     }
   ],
   "prompts": [
@@ -79,6 +84,15 @@
       "userId": 1,
       "score": 0,
       "createdAt": "2026-09-01T08:18:27.933Z"
+    },
+    {
+      "id": 8,
+      "title": "Mon prompt",
+      "content": "Fais mon un programme pour devenir riche",
+      "categoryId": 4,
+      "userId": 4,
+      "score": 0,
+      "createdAt": "2026-09-01T12:43:24.738Z"
     }
   ],
   "votes": [
