@@ -53,28 +53,31 @@ export class PromptFormComponent {
 
   submit() {
     this.form.markAsTouched()
-    if(this.form.invalid) return
+    if (this.form.invalid) return
 
     const prompt = this.form.getRawValue()
 
-    if(this.promptId()) {
-      this.promptService.updatePrompt(this.promptId()!, prompt).subscribe()
-    } else {
-      this.promptService.createPrompt(prompt).subscribe()
-    }
-    this.message.add({ severity: 'success', summary: 'Success', detail: 'Prompt saved successfully' })
-    void this.router.navigate(['/'])
+    const request$ = this.promptId()
+      ? this.promptService.updatePrompt(this.promptId()!, prompt)
+      : this.promptService.createPrompt(prompt)
+
+    request$.subscribe(() => {
+      this.message.add({ severity: 'success', summary: 'Success', detail: 'Prompt saved successfully' })
+      void this.router.navigate(['/'])
+    })
   }
 
   delete() {
-    if(this.promptId()) {
-      this.promptService.deletePrompt(this.promptId()!).subscribe()
-      this.message.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Prompt deleted successfully',
+    const id = this.promptId()
+    if (id) {
+      this.promptService.deletePrompt(id).subscribe(() => {
+        this.message.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Prompt deleted successfully',
+        })
+        void this.router.navigate(['/'])
       })
-      void this.router.navigate(['/'])
     }
   }
 }
